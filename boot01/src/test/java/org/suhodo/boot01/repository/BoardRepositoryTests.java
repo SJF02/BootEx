@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -91,5 +92,13 @@ public class BoardRepositoryTests {
         String nowTime = boardRepository.getTime();
 
         log.info("현재 시간: " + nowTime);
+    }
+    
+    @Test
+    public void testSearch1(){
+        Pageable pageable = PageRequest.of(1, 10,
+                                    Sort.by("bno").descending());
+
+        boardRepository.search1(pageable);
     }
 }

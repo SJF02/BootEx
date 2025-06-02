@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.suhodo.boot01.domain.Board;
+import org.suhodo.boot01.repository.search.BoardSearch;
 
 /*
  * BoardRepository는 Long(pk의 자료형)
@@ -13,7 +14,7 @@ import org.suhodo.boot01.domain.Board;
  * Spring Boot에 의해서 
  * 스프링 컨테이너에 BoardRepository의 자식 객체가 Bean으로 등록된다.
  */
-public interface BoardRepository extends JpaRepository<Board, Long> {
+public interface BoardRepository extends JpaRepository<Board, Long>, BoardSearch {
     // 기본 CRUD 기능을 자동으로 제공한다.
     // 그런데 사용자의 모든 SQL에 대응할 수 없으므로 확장기능이 필요하다.
 

@@ -16,6 +16,7 @@ import com.querydsl.jpa.JPQLQuery;
  * 1) 인터페이스 정의 : BoardSearch
  * 2) 클래스 정의 : BoardSearchImpl(인터페이스명 + Impl)
  *                 상속: QuerydslRepositorySupport, BoardSearch
+ * 3) BoardRepository에 BoardSearch를 상속시킴
  */
 public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardSearch{
 
@@ -42,5 +43,11 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         return null;
     }
 
-    
+    @Override
+    public Page<Board> searchAll(String[] types, String keyword, Pageable pageable) {
+
+        QBoard board = QBoard.board;
+
+        return null;
+    }    
 }
