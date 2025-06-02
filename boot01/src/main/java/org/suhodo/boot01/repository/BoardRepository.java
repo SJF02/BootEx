@@ -30,4 +30,12 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     // 3) Querydsl
     // 복잡한 쿼리를 생성하기 위한 메서드의 조합
+    // Q + 'Entity명' 클래스를 생성해야 한다.
+    /*
+     * vscode -> 새창 -> 폴더열기(현재 프로젝트)
+     * build.gradle -> Show Tasks
+     * Tasks -> other -> compileJava를 진행하면
+     * Q 클래스가 생긴다.
+     * BOOT01 -> build -> classes -> java -> ... -> domain -> QBaseEntity.class, QBoard.class
+     */
 }
