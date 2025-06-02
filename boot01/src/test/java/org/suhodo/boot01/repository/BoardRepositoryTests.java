@@ -85,4 +85,11 @@ public class BoardRepositoryTests {
 
         todoList.forEach(board->log.info(board));
     }
+
+    @Test
+    public void testTime(){
+        String nowTime = boardRepository.getTime();
+
+        log.info("현재 시간: " + nowTime);
+    }
 }
