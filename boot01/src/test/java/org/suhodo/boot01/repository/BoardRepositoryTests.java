@@ -112,9 +112,9 @@ public class BoardRepositoryTests {
 
         Page<Board> result = boardRepository.searchAll(types, keyword, pageable);
 
-        log.info(result.getTotalPages());
-        log.info(result.getSize());
-        log.info(result.getNumber());
+        log.info(result.getTotalPages());       // 전체 페이지
+        log.info(result.getSize());             // 전체 갯수
+        log.info(result.getNumber());           // 현재 페이지
         log.info(result.hasPrevious() + " : " + result.hasNext());
         result.getContent().forEach(board -> log.info(board));
     }
