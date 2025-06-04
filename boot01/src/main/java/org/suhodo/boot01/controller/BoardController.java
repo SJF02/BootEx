@@ -39,15 +39,23 @@ public class BoardController {
 
     }
 
+    /*
+     * boardDTO에 브라우저가 보내준 변수값이 저장되는 지 검증 @Valid
+     * 검증과정에서 이상있으면 bindingResult에 에러가 발생생
+     */
     @PostMapping("/register")
     public String registerPost(@Valid BoardDTO boardDTO, BindingResult bindingResult,
                             RedirectAttributes redirectAttributes){
     
         log.info("board POST register...........");
 
+        // 데이터를 넣는 과정에서 에러가 발생했다면
         if(bindingResult.hasErrors()){
             log.info("has errors...........");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+
+            // 브라우저한테 /board/register로 즉시 이동해 명령
+            // 위의 errors값을 가지고 이동, 한번 보이면 이후에는 사라짐
             return "redirect:/board/register";
         }
 
