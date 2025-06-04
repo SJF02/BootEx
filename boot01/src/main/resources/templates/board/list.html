@@ -136,9 +136,12 @@
     console.log("result: " + result);
 
     const modal = new bootstrap.Modal(document.querySelector(".modal"));
-
-    if(result)
+    const modalBody = document.querySelector(".modal-body p");
+    
+    if(result) {
+        modalBody.textContent = result;
         modal.show();
+    }
 
 </script>
 
