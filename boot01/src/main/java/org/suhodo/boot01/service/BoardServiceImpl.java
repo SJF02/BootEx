@@ -2,6 +2,7 @@ package org.suhodo.boot01.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.suhodo.boot01.domain.Board;
 import org.suhodo.boot01.dto.BoardDTO;
 import org.suhodo.boot01.repository.BoardRepository;
 
@@ -28,7 +29,11 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public Long register(BoardDTO boardDTO) {
+        // boardDTO -> board로 변환
+        Board board = modelMapper.map(boardDTO, Board.class);
 
+        Long bno = boardRepository.save(board).getBno();
+        return bno;
     }
 
 }
