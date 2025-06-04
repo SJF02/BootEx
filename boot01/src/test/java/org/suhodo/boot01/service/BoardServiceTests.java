@@ -28,4 +28,15 @@ public class BoardServiceTests {
 
         log.info("bno: " + bno);
     }
+
+    @Test
+    public void testModify(){
+        BoardDTO boardDTO = BoardDTO.builder()
+                    .bno(101L)
+                    .title("Updated...101")
+                    .content("Updated content 101...")
+                    .build();
+                
+        boardService.modify(boardDTO);
+    }
 }
