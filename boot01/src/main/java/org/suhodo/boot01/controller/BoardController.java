@@ -34,14 +34,16 @@ public class BoardController {
         model.addAttribute("responseDTO", responseDTO);
     }
 
+    // register.html을 보여주는 역할
     @GetMapping("/register")
     public void registerGET(){
 
     }
 
+    // register.html에서 보내온 데이터를 처리하는 역할
     /*
      * boardDTO에 브라우저가 보내준 변수값이 저장되는 지 검증 @Valid
-     * 검증과정에서 이상있으면 bindingResult에 에러가 발생생
+     * 검증과정에서 이상있으면 bindingResult에 에러가 발생
      */
     @PostMapping("/register")
     public String registerPost(@Valid BoardDTO boardDTO, BindingResult bindingResult,
