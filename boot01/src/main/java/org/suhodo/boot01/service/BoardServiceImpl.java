@@ -1,11 +1,17 @@
 package org.suhodo.boot01.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.suhodo.boot01.domain.Board;
 import org.suhodo.boot01.dto.BoardDTO;
+import org.suhodo.boot01.dto.PageRequestDTO;
+import org.suhodo.boot01.dto.PageResponseDTO;
 import org.suhodo.boot01.repository.BoardRepository;
 
 import groovy.util.logging.Log4j2;
@@ -57,6 +63,26 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public void remove(Long bno) {
         boardRepository.deleteById(bno);
+    }
+
+    @Override
+    public PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO) {
+
+        String[] types = pageRequestDTO.getTypes();
+        String keyword = pageRequestDTO.getKeyword();
+        Pageable pageable = pageRequestDTO.getPageable("bno");
+
+        Page<Board> result = boardRepository.searchAll(types, keyword, pageable);
+
+        List<BoardDTO> dtoList = result.getContent().stream()
+                        .map(board -> modelMapper.map(board, BoardDTO.class))
+                        .collect(Collectors.toList());
+
+        return PageResponseDTO.<BoardDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total((int)result.getTotalElements())
+                .build();
     }
 
 }
