@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.suhodo.boot01.dto.BoardDTO;
 import org.suhodo.boot01.dto.PageRequestDTO;
@@ -71,7 +72,7 @@ public class BoardController {
     }
 
     @GetMapping("/read")
-    public void read(Long bno, PageRequestDTO pageRequestDTO, Model model){
+    public void read(@RequestParam(value="bno") Long bno, PageRequestDTO pageRequestDTO, Model model){
         BoardDTO boardDTO = boardService.readOne(bno);
 
         log.info(boardDTO);
