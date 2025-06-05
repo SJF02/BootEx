@@ -122,11 +122,11 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
 
         JPQLQuery<BoardListReplyCountDTO> dtoQuery = 
                 query.select(Projections.bean(BoardListReplyCountDTO.class,
-                board.bno,
-                board.title,
-                board.writer,
-                board.regDate,
-                reply.count().as("replyCount")));
+                    board.bno,
+                    board.title,
+                    board.writer,
+                    board.regDate,
+                    reply.count().as("replyCount")));
 
         this.getQuerydsl().applyPagination(pageable, dtoQuery);
         List<BoardListReplyCountDTO> dtoList = dtoQuery.fetch();
