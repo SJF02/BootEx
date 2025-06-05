@@ -96,10 +96,10 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         QBoard board = QBoard.board;
         QReply reply = QReply.reply;
 
-        JPQLQuery<Board> query = from(board);
-        query.leftJoin(reply).on(reply.board.eq(board));
+        JPQLQuery<Board> query = from(board);   // from board
+        query.leftJoin(reply).on(reply.board.eq(board)); // left join reply on board.bno=reply.board_bno
 
-        query.groupBy(board);
+        query.groupBy(board);                   // group by board
 
         if ((types != null && types.length > 0) && keyword != null) {
             BooleanBuilder booleanBuilder = new BooleanBuilder();
@@ -117,6 +117,9 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
                         break;
                 }
             }
+            // where board.title like '%{keyword}%' or
+            //      board.content like '%{keyword}%' or
+            //      board.writer like '%{keyword}%'
             query.where(booleanBuilder);
         }
 
