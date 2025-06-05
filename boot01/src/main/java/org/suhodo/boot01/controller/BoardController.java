@@ -105,7 +105,7 @@ public class BoardController {
     }
 
     @PostMapping("/remove")
-    public String remove(Long bno, RedirectAttributes redirectAttributes){
+    public String remove(@RequestParam(value="bno") Long bno, RedirectAttributes redirectAttributes){
         log.info("remove post... " + bno);
 
         boardService.remove(bno);
