@@ -13,5 +13,13 @@ async function get1(bno){
 async function getList({bno, page, size, goLast}){
   const result = await axios.get(`/replies/list/${bno}`, {params: {page, size}});
 
+  // true면 최신 페이지(마지막 페이지)로 이동하라
+  if(goLast){
+    const total = result.data.total;
+    const lastPage = parseInt(Math.ceil(total/size));
+
+    return getList({bno:bno, page:lastPage, size:size});
+  }
+
   return result.data;
 }
