@@ -1,9 +1,12 @@
 package org.suhodo.boot01.service;
 
 import java.lang.foreign.Linker.Option;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -66,7 +69,18 @@ public class ReplyServiceImpl implements ReplyService{
                                                 pageRequestDTO.getSize(),
                                                 Sort.by("rno").ascending());
 
-        return null;
+        Page<Reply> result = replyRepository.listOfBoard(bno, pageable);
+
+        List<ReplyDTO> dtoList = result.getContent()
+                                .stream()
+                                .map(reply->modelMapper.map(reply, ReplyDTO.class))
+                                .collect(Collectors.toList());
+                                
+        return PageResponseDTO.<ReplyDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total((int)result.getTotalElements())
+                .build();
     }
 
 }
