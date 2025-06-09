@@ -87,6 +87,17 @@
 </div>
 
 <script layout:fragment="script" th:inline="javascript">
+    const bno = [[${dto.bno}]];
+
+    // get1(bno);                   // 1) 
+    // console.log(get1(bno));      // 2)
+
+    // 비동기 결과를 받고나서 로그 출력
+    get1(bno).then(data => {        // 3)
+        console.log(data);
+    }).catch(e => {
+        console.error(e);
+    });
 
 </script>
 
