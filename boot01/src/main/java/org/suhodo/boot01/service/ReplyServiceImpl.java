@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.suhodo.boot01.domain.Reply;
 import org.suhodo.boot01.dto.PageRequestDTO;
 import org.suhodo.boot01.dto.PageResponseDTO;
@@ -18,6 +19,7 @@ import org.suhodo.boot01.repository.ReplyRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+
 
 @Service
 @RequiredArgsConstructor

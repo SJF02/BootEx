@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,7 +59,7 @@ public class ReplyController {
             throw new BindException(bindingResult);
         }
 
-        Map<String, Long> resultMap = Map.of("rno", 111L);
+        Map<String, Long> resultMap = new HashMap<>();
 
         Long rno = replyService.register(replyDTO);
 
