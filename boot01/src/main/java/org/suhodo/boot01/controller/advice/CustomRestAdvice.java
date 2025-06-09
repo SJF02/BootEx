@@ -59,6 +59,7 @@ public class CustomRestAdvice {
     }
 
     // 해당 rno가 없을 때 호출
+    // 존재하지 않는 댓글을 삭제할 때
     @ExceptionHandler({NoSuchElementException.class,
                         EmptyResultDataAccessException.class})
     @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
