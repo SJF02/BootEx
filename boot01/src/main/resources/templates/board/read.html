@@ -196,6 +196,24 @@
         registerModal.hide();
     }, false);
 
+    registerBtn.addEventListener("click", function(e){
+        const replyObj = {
+            bno:bno,
+            replyText:replyText.value,
+            replyer:replyer.value
+        }
+
+        addReply(replyObj).then(result => {
+            alert(result.rno);
+            registerModal.hide();
+            replyText.value = '';
+            replyer.value = '';
+            printReplies(1, 10, true);
+        }).catch(e => {
+            alert("Exception...");
+        })
+    }, false);
+
 </script>
 
 </html>
