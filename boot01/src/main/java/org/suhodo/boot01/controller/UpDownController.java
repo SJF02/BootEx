@@ -34,24 +34,32 @@ public class UpDownController {
         
         log.info(uploadFileDTO);
 
+        // 업로드된 파일들이 존재한다면
         if(uploadFileDTO.getFiles() != null){
 
+            // 업로드된 파일을 가공 저장할 리스트 자료구조 생성
             final List<UploadResultDTO> list = new ArrayList<>();
 
             uploadFileDTO.getFiles().forEach(multipartFile -> {
 
+                // 원본 파일 명
                 String originalName = multipartFile.getOriginalFilename();
                 log.info(originalName);
 
+                // Unique ID : 모든 파일을 중복되지 않기 위해서 
                 String uuid = UUID.randomUUID().toString();
                 Path savePath = Paths.get(uploadPath, uuid + "_" + originalName);
 
                 boolean image = false;
 
                 try{
+                    // 업로드된 파일을 저장소로 이동
                     multipartFile.transferTo(savePath);
 
+                    // 파일 형식이 이미지 파일인지
                     if(Files.probeContentType(savePath).startsWith("image")){
+
+                        // s_ 같 붙은 파일은 썸네일 이미지 파일을 생성한다.(200 x 200)
                         image = true;
                         File thumbFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
                         
