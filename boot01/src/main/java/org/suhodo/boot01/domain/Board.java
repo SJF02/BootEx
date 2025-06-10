@@ -3,6 +3,7 @@ package org.suhodo.boot01.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -49,12 +50,29 @@ public class Board extends BaseEntity{
 
     @ToString(exclude = "imageSet") : Board객체 정보 조회시 일단 imageSet은 제외
      */
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY,
+                cascade = {CascadeType.ALL})
     @Builder.Default
     private Set<BoardImage> imageSet = new HashSet<>();
 
     public void change(String title, String content){
         this.title = title;
         this.content = content;
+    }
+
+    public void addImage(String uuid, String fileName){
+        BoardImage boardImage = BoardImage.builder()
+                    .uuid(uuid)
+                    .fileName(fileName)
+                    .board(this)
+                    .ord(imageSet.size())
+                    .build();
+        imageSet.add(boardImage);
+    }
+
+    public void clearImages(){
+        imageSet.forEach(boardImage -> boardImage.changeBoard(null));
+
+        imageSet.clear();
     }
 }
