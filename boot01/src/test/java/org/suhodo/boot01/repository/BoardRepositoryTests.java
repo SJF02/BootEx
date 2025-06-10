@@ -1,5 +1,7 @@
 package org.suhodo.boot01.repository;
 
+import static org.mockito.ArgumentMatchers.isNull;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -216,4 +218,23 @@ public class BoardRepositoryTests {
         boardRepository.deleteById(bno);            // 게시글과 종속된 BoardImage 삭제
     }
 
+    @Test
+    public void testInsertAll(){
+        for(int i=0;i<=100;i++){
+            Board board = Board.builder()
+                    .title("Title..." + i)
+                    .content("Content..." + i)
+                    .writer("writer..." + i)
+                    .build();
+
+            for(int j=0;j<3;j++){
+                if(i%5 == 0)
+                    continue;
+                
+                board.addImage(UUID.randomUUID().toString(), i+"file"+j+".jpg");
+            }
+
+            boardRepository.save(board);
+        }
+    }
 }
