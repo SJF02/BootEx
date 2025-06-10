@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.suhodo.boot01.domain.Board;
 import org.suhodo.boot01.dto.BoardListReplyCountDTO;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 
 @SpringBootTest
@@ -149,5 +150,17 @@ public class BoardRepositoryTests {
         }
 
         boardRepository.save(board);
+    }
+
+    @Transactional  // No Session, 중간에 세션 연결이 중지되는 것을 방지할 때 사용함 
+    @Test
+    public void testReadWithImages(){
+        Optional<Board> result = boardRepository.findById(109L);
+
+        Board board = result.orElseThrow();
+
+        log.info(board);
+        log.info("------------------");
+        log.info(board.getImageSet());
     }
 }
