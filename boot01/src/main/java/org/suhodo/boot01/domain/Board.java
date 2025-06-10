@@ -36,8 +36,20 @@ public class Board extends BaseEntity{
     @Column(length=50, nullable = false)
     private String writer;
 
-    // @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
-    @OneToMany
+    
+    // @OneToMany  // 불필요한 매핑 테이블이 생긴다
+
+    /*
+    BoardImage의 board와 1:n관계를 지정하면 
+    Board와 BoardImage사이에 1:n관계이며 양방향 연결이 이루어진다.
+
+    EAGER : Board를 조회할 때 BoardImage를 무조건 조회해서 imageSet에 읽어들인다.
+    LAZY : Board를 조회할 때 BoardImage는 조회하지 않는다.
+           imageSet을 접근하면 그때 BoardImage를 조회한다.
+
+    @ToString(exclude = "imageSet") : Board객체 정보 조회시 일단 imageSet은 제외
+     */
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     @Builder.Default
     private Set<BoardImage> imageSet = new HashSet<>();
 
