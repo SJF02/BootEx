@@ -18,6 +18,7 @@ import org.suhodo.boot01.dto.upload.UploadResultDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.log4j.Log4j2;
+import net.coobird.thumbnailator.Thumbnailator;
 
 
 @RestController
@@ -53,7 +54,8 @@ public class UpDownController {
                     if(Files.probeContentType(savePath).startsWith("image")){
                         image = true;
                         File thumbFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
-                        Thumbnailator.createTumbnail(savePath.toFile(), thumbFile, 200, 200);
+                        
+                        Thumbnailator.createThumbnail(savePath.toFile(), thumbFile, 200, 200);
                     }
 
                     list.add(UploadResultDTO.builder()
