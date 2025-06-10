@@ -6,7 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +17,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -89,7 +92,7 @@ public class UpDownController {
 
     @Operation(description = "GET방식으로 업로드된 파일 조회")
     @GetMapping("/view/{fileName}")
-    public ResponseEntity<Resource> viewFileGET(@PathVariable String fileName){
+    public ResponseEntity<Resource> viewFileGET(@PathVariable("fileName") String fileName){
         
         Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
 
@@ -103,5 +106,31 @@ public class UpDownController {
         }
 
         return ResponseEntity.ok().headers(headers).body(resource);
+    }
+
+    @Operation(description = "DELETE 방식으로 파일 삭제")
+    @DeleteMapping("/remove/{fileName}")
+    public Map<String, Boolean> removeFile(@PathVariable("fileName") String fileName){
+        
+        Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
+        
+        Map<String, Boolean> resultMap = new HashMap<>();
+        boolean removed = false;
+
+        try{
+            String contentType = Files.probeContentType(resource.getFile().toPath());
+            removed = resource.getFile().delete();
+
+            if(contentType.startsWith("image")){
+                File thumbnailFile = new File(uploadPath + File.separator + "s_" + fileName);
+                thumbnailFile.delete();
+            }
+        }catch(Exception e){
+            log.error(e);
+        }
+
+        resultMap.put("result", removed);
+
+        return resultMap;
     }
 }
