@@ -51,7 +51,7 @@ public class Board extends BaseEntity{
     @ToString(exclude = "imageSet") : Board객체 정보 조회시 일단 imageSet은 제외
      */
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY,
-                cascade = {CascadeType.ALL})
+                cascade = {CascadeType.ALL}, orphanRemoval = true)
     @Builder.Default
     private Set<BoardImage> imageSet = new HashSet<>();
 

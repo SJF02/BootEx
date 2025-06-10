@@ -28,6 +28,9 @@ public class BoardRepositoryTests {
     @Autowired
     private BoardRepository boardRepository;
 
+    @Autowired
+    private ReplyRepository replyRepository;
+
     @Test
     public void testInsert(){
         IntStream.rangeClosed(1, 100).forEach(i -> {
@@ -187,7 +190,14 @@ public class BoardRepositoryTests {
 
         Board board = result.orElseThrow();
 
-        board.clearImages();        // 모두 삭제
+        /*  모두 삭제 시도
+          Board와 BoardImage의 연결은 끊어지지만,
+          실제 BoardImage가 삭제되지 않는다.
+
+          실제 삭제하고 싶다면 Board의 imageSet에 
+          orphanRemoval = true 설정을 해야 한다.
+        */
+        board.clearImages();        
 
         for(int i=0;i<2;i++){
             board.addImage(UUID.randomUUID().toString(), "updatefile" + i + ".jpg");
@@ -195,4 +205,15 @@ public class BoardRepositoryTests {
 
         boardRepository.save(board);
     }
+
+    @Test
+    @Transactional
+    @Commit
+    public void testRemoveAll(){
+        Long bno = 109L;
+
+        replyRepository.deleteByBoard_Bno(bno);     // bno에 종속된 댓글 삭제
+        boardRepository.deleteById(bno);            // 게시글과 종속된 BoardImage 삭제
+    }
+
 }
