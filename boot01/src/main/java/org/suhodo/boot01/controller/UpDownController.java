@@ -121,6 +121,7 @@ public class UpDownController {
             String contentType = Files.probeContentType(resource.getFile().toPath());
             removed = resource.getFile().delete();
 
+            // 이미지 파일은 썸네일 파일까지 삭제
             if(contentType.startsWith("image")){
                 File thumbnailFile = new File(uploadPath + File.separator + "s_" + fileName);
                 thumbnailFile.delete();
