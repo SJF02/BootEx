@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 import org.suhodo.boot01.domain.Board;
 import org.suhodo.boot01.domain.BoardImage;
 import org.suhodo.boot01.dto.BoardListReplyCountDTO;
@@ -176,5 +177,22 @@ public class BoardRepositoryTests {
         for(BoardImage boardImage : board.getImageSet()){
             log.info(boardImage);
         }
+    }
+
+    @Transactional
+    @Commit
+    @Test
+    public void testModifyImages(){
+        Optional<Board> result = boardRepository.findByIdWithImages(109L);
+
+        Board board = result.orElseThrow();
+
+        board.clearImages();        // 모두 삭제
+
+        for(int i=0;i<2;i++){
+            board.addImage(UUID.randomUUID().toString(), "updatefile" + i + ".jpg");
+        }
+
+        boardRepository.save(board);
     }
 }
