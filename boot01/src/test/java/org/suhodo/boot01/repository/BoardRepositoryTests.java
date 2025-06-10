@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.suhodo.boot01.domain.Board;
+import org.suhodo.boot01.domain.BoardImage;
 import org.suhodo.boot01.dto.BoardListReplyCountDTO;
 
 import jakarta.transaction.Transactional;
@@ -162,5 +163,18 @@ public class BoardRepositoryTests {
         log.info(board);
         log.info("------------------");
         log.info(board.getImageSet());
+    }
+
+    @Test
+    public void testReadWithImages1(){
+        Optional<Board> result = boardRepository.findByIdWithImages(109L);
+
+        Board board = result.orElseThrow();
+
+        log.info(board);
+        log.info("---------------------");
+        for(BoardImage boardImage : board.getImageSet()){
+            log.info(boardImage);
+        }
     }
 }
