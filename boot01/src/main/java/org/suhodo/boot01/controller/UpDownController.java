@@ -25,7 +25,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Log4j2
 public class UpDownController {
 
-    @Value("{org.suhodo.upload.path}")
+    @Value("${org.suhodo.upload.path}")
     private String uploadPath;
 
     @Operation(description = "POST 방식으로 파일 업로드")
