@@ -53,11 +53,32 @@
                         </div>
                     </form>
 
+                    <!-- 첨부 파일 썸네일 보여주는 부분 -->
+                    <div class="row mt-3">
+                        <div class="col ">
+                            <div class="container-fluid d-flex uploadResult" style="flex-wrap: wrap;">
+                                <th:block th:each="fileName:${dto.fileNames}">
+                                    <div class="card col-4" th:with = "arr = ${fileName.split('_')}">
+                                        <div class="card-header d-flex justify-content-center">
+                                            [[${arr[1]}]]
+                                            <button class="btn-sm btn-danger"
+                                                    th:onclick="removeFile([[${arr[0]}]], [[${arr[1]}]],this)">X</button>
+                                        </div>
+                                        <div class="card-body">
+                                            <img th:src="|/view/s_${fileName}|" th:data-src="${fileName}" >
+                                        </div>
+                                    </div><!-- card -->
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
 
                 </div><!--end card body-->
             </div><!--end card-->
         </div><!-- end col-->
     </div><!-- end row-->
+
+
 </div>
 
 <script layout:fragment="script" th:inline="javascript">
