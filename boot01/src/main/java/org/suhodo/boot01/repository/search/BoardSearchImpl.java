@@ -180,13 +180,14 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
 
         getQuerydsl().applyPagination(pageable, boardJPQLQuery);
 
+        // board정보 요청, reply갯수 요청
         JPQLQuery<Tuple> tupleJPQLQuery = boardJPQLQuery.select(board, reply.countDistinct());
 
         List<Tuple> tupleList = tupleJPQLQuery.fetch();
 
         List<BoardListAllDTO> dtoList = tupleList.stream().map(tuple -> {
 
-            Board board1 = (Board)tuple.get(board);
+            Board board1 = (Board)tuple.get(board); // tuple.get(0, board);
             long replyCount = tuple.get(1, Long.class);
 
             BoardListAllDTO dto = BoardListAllDTO.builder()
