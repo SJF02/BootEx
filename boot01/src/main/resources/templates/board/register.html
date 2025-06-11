@@ -109,12 +109,13 @@
 
   document.querySelector(".uploadBtn").addEventListener("click", function (e) {
 
-    const formObj = new FormData();
+    const formObj = new FormData();   // form 객체 생성
     const fileInput = document.querySelector("input[name='files']");
     console.log(fileInput.files);
 
     const files = fileInput.files
 
+    // 폼객체에 파일들을 추가해라
     for (let i = 0; i < files.length; i++) {
       formObj.append("files", files[i]);
     }
@@ -146,6 +147,19 @@
       </div><!-- card -->`
 
     uploadResult.innerHTML += str
+  }
+
+  function removeFile(uuid, fileName, obj){
+    console.log(uuid);
+    console.log(fileName);
+
+    console.log(obj);
+
+    const targetDiv = obj.closest(".card");
+
+    removeFileToServer(uuid, fileName).then(data => {
+      targetDiv.remove();
+    });
   }
 
 </script>
