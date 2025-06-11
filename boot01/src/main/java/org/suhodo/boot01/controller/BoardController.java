@@ -161,8 +161,11 @@ public class BoardController {
             String resourceName = resource.getFilename();
 
             try {
+                // 원본 파일 삭제
                 String contentType = Files.probeContentType(resource.getFile().toPath());
                 resource.getFile().delete();
+
+                // 이미지는 썸네일 파일이 존재하므로, 삭제
                 if (contentType.startsWith("image")) {
                     File thumbnailFile = new File(uploadPath + File.separator + "s_" + fileName);
                     thumbnailFile.delete();
