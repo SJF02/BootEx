@@ -95,6 +95,18 @@
 
     alert(errorMsg);
   }
+
+  // 업로드 모달
+  const uploadModal = new bootstrap.Modal(document.querySelector(".uploadModal"));
+
+  document.querySelector(".uploadFileBtn").addEventListener("click", function(e){
+    
+    e.stopPropagation();
+    e.preventDefault();
+    uploadModal.show();
+
+  }, false);
+
 </script>
 
 </html>
