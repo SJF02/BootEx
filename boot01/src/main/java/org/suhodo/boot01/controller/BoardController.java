@@ -36,6 +36,9 @@ public class BoardController {
     @Value("${org.suhodo.upload.path}")
     private String uploadPath;
 
+    /*
+     * /board/list.html에 pageRequestDTO와 model이 전달된다.
+     */
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, Model model) {
 
@@ -83,6 +86,7 @@ public class BoardController {
 
         redirectAttributes.addFlashAttribute("result", bno);
 
+        // 브라우저 너는 /board/list로 재접속해라.
         return "redirect:/board/list";
     }
 
