@@ -30,7 +30,7 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	// MariaDB
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	// runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
 	// JUnit test using lombok
 	testCompileOnly 'org.projectlombok:lombok'
