@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @SpringBootTest
 class SbbApplicationTests {
 
@@ -34,7 +37,7 @@ class SbbApplicationTests {
 	@Test
 	void testGet(){
 		List<Question> all = this.questionRepository.findAll();
-		all.forEach(q -> System.out.println(q.getSubject()));
+		all.forEach(q -> log.info(q.getSubject()));
 	}
 
 	@Test
@@ -42,13 +45,13 @@ class SbbApplicationTests {
 		Optional<Question> oq = this.questionRepository.findById(1);
 		if(oq.isPresent()){
 			Question q = oq.get();
-			System.out.println(q.getSubject());
+			log.info(q.getSubject());
 		}
 	}
 
 	@Test
 	void testFindBySubject(){
 		Question q = this.questionRepository.findBySubject("sbb가 무엇인가요?");
-		System.out.println(q.getId());
+		log.info(q.getId());
 	}
 }
