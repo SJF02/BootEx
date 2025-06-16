@@ -1,6 +1,10 @@
 package com.mysite.sbb;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,4 +31,24 @@ class SbbApplicationTests {
 		this.questionRepository.save(q2);
 	}
 
+	@Test
+	void testGet(){
+		List<Question> all = this.questionRepository.findAll();
+		all.forEach(q -> System.out.println(q.getSubject()));
+	}
+
+	@Test
+	void testFindById(){
+		Optional<Question> oq = this.questionRepository.findById(1);
+		if(oq.isPresent()){
+			Question q = oq.get();
+			System.out.println(q.getSubject());
+		}
+	}
+
+	@Test
+	void testFindBySubject(){
+		Question q = this.questionRepository.findBySubject("sbb가 무엇인가요?");
+		System.out.println(q.getId());
+	}
 }
