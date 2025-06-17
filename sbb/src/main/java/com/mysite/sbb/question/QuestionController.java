@@ -12,12 +12,12 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class QuestionController {
 
-    private final QuestionRepository questionRepository;
+    private final QuestionService questionService;
 
     @GetMapping("/question/list")
     public String list(Model model){
 
-        List<Question> questionList = this.questionRepository.findAll();
+        List<Question> questionList = this.questionService.getList();
         model.addAttribute("questionList", questionList);
 
         // question_list.html로 이동하라

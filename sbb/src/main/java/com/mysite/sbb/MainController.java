@@ -12,4 +12,11 @@ public class MainController {
     public String index(){
         return "안녕하세요 sbb에 오신 것을 환영합니다.";
     }
+
+    @GetMapping("/")
+    public String root(){
+
+        // 브라우저한테 이 주소로 다시 접속하라고 명령
+        return "redirect:/question/list";
+    }
 }
