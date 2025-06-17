@@ -1,6 +1,5 @@
 package com.mysite.sbb;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
@@ -21,7 +20,7 @@ class SbbApplicationTests {
 	private QuestionRepository questionRepository;
 
 	@Test
-	void testJpa(){
+	void testJpa() {
 		Question q1 = new Question();
 		q1.setSubject("sbb가 무엇인가요?");
 		q1.setContent("sbb에 대해서 알고 싶습니다.");
@@ -36,36 +35,40 @@ class SbbApplicationTests {
 	}
 
 	@Test
-	void testGet(){
+	void testGet() {
 		List<Question> all = this.questionRepository.findAll();
 		all.forEach(q -> log.info(q.getSubject()));
 	}
 
 	@Test
-	void testFindById(){
+	void testFindById() {
 		Optional<Question> oq = this.questionRepository.findById(1);
-		if(oq.isPresent()){
+		if (oq.isPresent()) {
 			Question q = oq.get();
 			log.info(q.getSubject());
 		}
 	}
 
 	@Test
-	void testFindBySubject(){
-		Question q = this.questionRepository.findBySubject("sbb가 무엇인가요?");
-		log.info(q.getId());
+	void testFindBySubject() {
+		// Question q = this.questionRepository.findBySubject("sbb가 무엇인가요?");
+		// log.info(q.getId());
+		List<Question> qList = this.questionRepository.findBySubject("sbb가 무엇인가요?");
+		qList.forEach(q -> log.info(q));
 	}
 
 	@Test
-	void testFindSubAndContent(){
-		Question q = this.questionRepository.findBySubjectAndContent
-				("sbb가 무엇인가요?", "sbb에 대해서 알고 싶습니다.");
-		log.info(q.getId());
+	void testFindSubAndContent() {
+		// Question q = this.questionRepository.findBySubjectAndContent
+		// ("sbb가 무엇인가요?", "sbb에 대해서 알고 싶습니다.");
+		// log.info(q.getId());
+		List<Question> qList = this.questionRepository.findBySubjectAndContent("sbb가 무엇인가요?", "sbb에 대해서 알고 싶습니다.");
+		qList.forEach(q -> log.info(q));
 	}
 
 	@Test
-	void testFindSubjectLike(){
-        List<Question> qList = this.questionRepository.findBySubjectLike("sbb%");
-        qList.forEach(q -> log.info(q));
+	void testFindSubjectLike() {
+		List<Question> qList = this.questionRepository.findBySubjectLike("sbb%");
+		qList.forEach(q -> log.info(q));
 	}
 }
