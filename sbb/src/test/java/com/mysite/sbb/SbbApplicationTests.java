@@ -16,6 +16,7 @@ import com.mysite.sbb.answer.Answer;
 import com.mysite.sbb.answer.AnswerRepository;
 import com.mysite.sbb.question.Question;
 import com.mysite.sbb.question.QuestionRepository;
+import com.mysite.sbb.question.QuestionService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -28,6 +29,9 @@ class SbbApplicationTests {
 
 	@Autowired
 	private AnswerRepository answerRepository;
+
+	@Autowired
+	private QuestionService questionService;
 
 	@Test
 	void testJpa() {
@@ -102,21 +106,21 @@ class SbbApplicationTests {
 	}
 
 	@Test
-	void testInsertAnswer(){
+	void testInsertAnswer() {
 		// Question의 자식으로 등록하기 위해 Question을 가져온다.
 		Optional<Question> oq = this.questionRepository.findById(2);
-		assertTrue(oq.isPresent());		// 잘 가져왔는지, 없으면 테스트 에러 발생
+		assertTrue(oq.isPresent()); // 잘 가져왔는지, 없으면 테스트 에러 발생
 		Question q = oq.get();
 
 		Answer a = new Answer();
 		a.setContent("네 자동으로 생성됩니다.");
-		a.setQuestion(q);		// q가 부모
+		a.setQuestion(q); // q가 부모
 		a.setCreateDate(LocalDateTime.now());
 		this.answerRepository.save(a);
 	}
 
 	@Test
-	void testSelectAnswer(){
+	void testSelectAnswer() {
 		Optional<Answer> oa = this.answerRepository.findById(1);
 		assertTrue(oa.isPresent());
 		Answer a = oa.get();
@@ -128,7 +132,7 @@ class SbbApplicationTests {
 
 	@Transactional
 	@Test
-	void testSelectQuestion(){
+	void testSelectQuestion() {
 		Optional<Question> oq = this.questionRepository.findById(2);
 		assertTrue(oq.isPresent());
 		Question q = oq.get();
@@ -136,6 +140,15 @@ class SbbApplicationTests {
 		List<Answer> answerList = q.getAnswerList();
 
 		log.info(q);
-		answerList.forEach(a->log.info(a));
+		answerList.forEach(a -> log.info(a));
+	}
+
+	@Test
+	void testInsertLargeQuestion() {
+		for (int i = 1; i <= 300; i++) {
+			String subject = String.format("테스트 데이터입니다:[%03d]", i);
+			String content = "내용무";
+			this.questionService.create(subject, content);
+		}
 	}
 }
